@@ -1,6 +1,206 @@
 <resources>
     <string name="app_name">EasyScada</string>
 
+    <!--
+        Exception
+    -->
+    <string name="ModbusTransIdOutOfRangeException">Transaction Identifier is out of range.</string>
+    <string name="ModbusProtocolOutOfRangeException">Protocol Identifier is out of range.</string>
+    <string name="ModbusLengthOutOfRangeException">Length is out of range.</string>
+    <string name="ModbusByteCountOutOfRangeException">Byte Count is out of range.</string>
+    <string name="ModbusUnitIdOutOfRangeException">Unit Identifier is out of range.</string>
+    <string name="ModbusUnitIdNotMatchingException">Unit Identifier received doesn\'t match with the expected one.</string>
+    <string name="ModbusAddressOutOfRangeException">Address is out of range.</string>
+    <string name="ModbusValueArrayLengthOutOfRangeException">Value Array Length is out of range.</string>
+    <string name="ModbusValueOutOfRangeException">Value is out of range.</string>
+    <string name="ModbusMBAPLengthException">MBAP length Out Of Range.</string>
+    <string name="ModbusPDULengthException">PDU length Out Of Range.</string>
+    <string name="ModbusCRCException">CRC Error.</string>
+    <!-- ModbusIOException String    -->
+    <string name="ModbusIllegalFunctionException">Illegal Function Exception.</string>
+    <string name="ModbusIllegalDataAddressException">Illegal Data Address Exception.</string>
+    <string name="ModbusIllegalDataValueException">Illegal Data Value Exception.</string>
+    <string name="ModbusServerDeviceFailureException">Server Device Failure Exception.</string>
+    <string name="ModbusUnknowException">Unknow Exception.</string>
+
+    <!-- Common Exception String    -->
+    <string name="TimeoutException">Timeout.</string>
+
+    <!-- ClientStatus. -->
+    <string name="tics_idle">Idle</string>
+    <string name="tics_offline">Offline</string>
+    <string name="tics_connecting">Connecting#8230</string>
+    <string name="tics_online">Online</string>
+    <string name="tics_error">Error</string>
+    <string name="tics_timeout">Timeout</string>
+    <string name="tics_disconnecting">Disconnecting#8230</string>
+
+    <!-- ClientWriteStatus. -->
+    <string name="ticwos_idle">Idle</string>
+    <string name="ticwos_ok">OK</string>
+    <string name="ticwos_error">Error</string>
+    <string name="ticwos_timeout">Timeout</string>
+
+    <!--
+        Settings Activity
+    -->
+    <string name="settings_title_dialog_section_new_room">Room</string>
+    <string name="settings_title_section_new_room">New Room</string>
+    <string name="settings_title_section_open_room">Open Room</string>
+    <string name="title_item_menu_delete_room">Delete Room</string>
+
+    <string name="settings_title_dialog_section_add_switch">Switch</string>
+    <string name="settings_title_section_add_switch">Add Switch</string>
+    <string name="settings_title_section_open_switch">Open Switch</string>
+    <string name="settings_title_section_edit_switch">Edit Switch</string>
+
+    <string name="settings_title_dialog_section_add_numeric_value">Numeric Value</string>
+    <string name="settings_title_section_add_numeric_value">Add Numeric Value</string>
+    <string name="settings_title_section_open_numeric_value">Open Numeric Value</string>
+    <string name="settings_title_section_edit_numeric_value">Edit Numeric Value</string>
+
+    <string name="settings_title_dialog_section_add_sensor_value">Sensor Value</string>
+    <string name="settings_title_section_add_raw_sensor_value">Add Raw Sensor Value</string>
+    <string name="settings_title_section_add_calibr_sensor_value">Add Cal. Sensor Value</string>
+    <string name="settings_title_section_open_sensor_value">Open Sensor Value</string>
+    <string name="settings_title_section_edit_sensor_value">Edit Sensor Value</string>
+
+    <string name="settings_title_section_new_tcp_ip_client">New TCP IP Client</string>
+    <string name="settings_title_section_open_tcp_ip_client">Open TCP IP Client</string>
+    <string name="settings_title_section_edit_tcp_ip_client">Edit TCP IP Client</string>
+
+    <string name="settings_title_section_new_bluetooth_client">New Bluetooth Client</string>
+    <string name="settings_title_section_open_bluetooth_client">Open Bluetooth Client</string>
+    <string name="settings_title_section_edit_bluetooth_client">Edit Bluetooth Client</string>
+
+    <string name="settings_title_section_disp"> </string>
+    <string name="settings_title_section_save">Save Room</string>
+
+    <!--
+        SetNameDialogFragment
+    -->
+    <string name="text_tv_room_name">Room Name</string>
+    <string name="text_toast_room_name_not_valid">Room Name not valid.</string>
+    <string name="text_toast_room_name_already_exist">Room Name already exist.</string>
+    <string name="text_toast_room_add_not_exist">Before Add objects, you should Create a New Room or Open an existing one.</string>
+    <string name="text_toast_room_save_not_exist">Before Save objects, you should Create a New Room or Open an existing one.</string>
+    <string name="text_toast_room_saved_ok">Room saved.</string>
+    <string name="text_toast_room_saved_error">Error Saving Room.</string>
+    <string name="text_tv_switch_name">Switch Name</string>
+    <string name="text_toast_light_switch_not_valid">Switch Name not valid.</string>
+    <string name="text_toast_light_switch_already_exist">Switch Name already exist.</string>
+
+    <!--
+        OkDialogFragment
+    -->
+    <string name="text_odf_title_room_data_not_present">Room data not present.</string>
+    <string name="text_odf_message_room_data_not_present">Please try to create a new Room or Select an exist one.</string>
+
+    <string name="text_odf_title_orientation_not_set">Orientation not Set.</string>
+    <string name="text_odf_message_orientation_not_set">Please set the orientation.</string>
+
+    <string name="text_odf_title_name_error">Name Error.</string>
+    <string name="text_odf_message_name_not_valid">Name not valid.</string>
+    <string name="text_odf_message_name_already_exist">Name already exist.</string>
+
+    <string name="text_odf_title_protocol_not_valid">Protocol values are not valid.</string>
+    <string name="text_odf_message_protocol_not_valid">Please set a valid Protocol values.</string>
+
+    <string name="text_odf_title_format_not_valid">Format values are not valid.</string>
+    <string name="text_odf_message_format_not_valid">Please set a valid Format values.</string>
+
+    <string name="text_odf_title_saving">Saving &#8230; </string>
+    <string name="text_odf_message_saving_ok">Saving OK.</string>
+    <string name="text_odf_message_saving_error">Saving Error.</string>
+
+    <string name="text_odf_title_deleting">Deleting &#8230; </string>
+    <string name="text_odf_message_deleting_ok">Deleting OK.</string>
+    <string name="text_odf_message_deleting_error">Deleting Error.</string>
+
+    <string name="text_odf_message_ok_button">OK</string>
+
+    <!--
+        YesNoDialogFragment
+        <string name="text_title_room_id_not_valid">Room identification not valid.</string>
+    -->
+    <string name="text_yndf_title_data_not_saved">Data not saved.</string>
+    <string name="text_yndf_message_data_save_confirmation">Do you want to save it ?</string>
+
+    <string name="text_yndf_title_data_delete">Data is deleting &#8230; </string>
+    <string name="text_yndf_message_data_delete_confirmation">Are you sure ?</string>
+
+    <string name="text_yndf_title_tcp_ip_client_name_already_exist">Tcp Ip Client name already exist.</string>
+    <string name="text_yndf_message_tcp_ip_client_name_already_exist_confirmation">Do you want to overwrite it ?</string>
+
+    <string name="text_yndf_title_base_value_name_already_exist">Name already exist.</string>
+    <string name="text_yndf_message_base_value_name_already_exist_confirmation">Do you want to overwrite it ?</string>
+
+    <string name="text_yndf_title_numeric_value_name_already_exist">Numeric Value name already exist.</string>
+    <string name="text_yndf_message_numeric_value_name_already_exist_confirmation">Do you want to overwrite it ?</string>
+
+    <string name="text_yndf_title_sensor_value_name_already_exist">Sensor Value name already exist.</string>
+    <string name="text_yndf_message_sensor_value_name_already_exist_confirmation">Do you want to overwrite it ?</string>
+
+    <string name="text_yndf_btn_yes">Yes</string>
+    <string name="text_yndf_btn_no">No</string>
+
+
+    <string name="text_tv_hint_name">My Name</string>
+    <string name="text_orientation_landscape">Landscape</string>
+    <string name="text_orientation_vertical">Vertical</string>
+
+    <!--
+    common_prop_activity
+    -->
+    <string name="text_tv_name">Name</string>
+    <string name="hint_et_name">Type a Name</string>
+    <string name="text_tv_orientation">Orientation</string>
+    <string name="text_rb_horizontal">Horizontal</string>
+    <string name="text_rb_vertical">Vertical</string>
+    <string name="text_tv_position">Position</string>
+    <string name="text_tv_position_x">X:</string>
+    <string name="text_tv_position_y">Y:</string>
+    <string name="text_tv_position_z">Z:</string>
+
+    <string name="text_tv_protocol_ui">DEVICE ADDRESS: </string>
+    <string name="text_tv_protocol_data_addr">DATA ADDRESS: (Holding Registers, 0=40001)</string>
+
+    <string name="text_tv_write_value_off">Value off:</string>
+    <string name="text_tv_write_value_off_on">Value off->on:</string>
+    <string name="text_tv_write_value_on_off">Value on->off:</string>
+    <string name="text_tv_write_value_on">Value on:</string>
+
+    <string name="text_tv_data_type">Data type</string>
+    <string name="text_tv_nr_of_decimal">Nr of decimal</string>
+    <string name="text_tv_um">Unit of measure</string>
+    <string name="text_tv_read_only">Read only</string>
+    <string name="text_tv_write_only">Write only</string>
+    <string name="text_tv_min_nr_char_to_show">Min nr of char to show</string>
+    <string name="text_tv_update_millis">Update millis</string>
+    <string name="text_tv_sensor_type">Sensor type</string>
+    <string name="text_tv_sensor_value">Sensor value</string>
+    <string name="text_tv_sensor_enable_simulation">Enable simulation</string>
+    <string name="text_tv_sensor_ampl_k">Amplifier k</string>
+    <string name="text_tv_sensor_low_pass_filter_k">Low pass filter k</string>
+    <string name="text_tv_sensor_sample_time_ms">Sensor sample time ms</string>
+    <string name="text_tv_sensor_write_update_time_ms">Sensor write update time ms</string>
+
+
+    <!--
+    numeric_value_prop_activity
+    -->
+    <string name="text_nvpa_tv_protocol_field_1">IDENTIFIER(2 byte long)</string>
+    <string name="text_nvpa_tv_protocol_field_2">ADDRESS(2 byte long)</string>
+    <string name="text_nvpa_tv_protocol_field_3">NRs OF 16 VALUE (2 byte long x VALUE)</string>
+
+    <string name="text_stica_btn_save_tcp_ip_client_data">SAVE</string>
+
+    <!--
+        Menu Title
+    -->
+    <string name="title_item_menu_delete">Delete</string>
+    <string name="title_item_menu_save">Save</string>
+
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
@@ -11,4 +211,86 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- EDEditText string -->
+    <string name="text_edad_dlg_title_value_out_of_range">Value out of range.</string>
+    <string name="text_edad_dlg_message_value_not_valid">Value not valid.</string>
+    <string name="text_edad_btn_ok">OK</string>
+
+    <!-- setting_tcp_ip_client_activity string -->
+    <string name="text_tv_server_name">Server Name</string>
+    <string name="hint_et_server_name">Server Name</string>
+    <string name="text_tv_server_ip_name">TCP IP Server Name</string>
+    <string name="text_tv_server_bt_name">Bluetooth Server Name</string>
+    <string name="text_tv_server_address">Server Address</string>
+    <string name="hint_et_server_address">address</string>
+    <string name="text_tv_server_ip_address">TCP IP Server Address</string>
+    <string name="text_et_server_ip_address">192.168.1.1</string>
+    <string name="hint_et_server_ip_address">xxx.xxx.xxx.xxx</string>
+    <string name="text_tv_server_bt_address">Bluetooth Server Address</string>
+    <string name="text_et_server_bt_address">xx.xx.xx.xx.xx.xx.xx.xx</string>
+    <string name="hint_et_server_bt_address">xx.xx.xx.xx.xx.xx.xx.xx</string>
+    <string name="text_stica_tv_server_port">TCP IP Server Port</string>
+    <string name="hint_stica_et_server_port">502</string>
+    <string name="text_stica_tv_timeout">Timeout(ms)</string>
+    <string name="hint_stica_et_timeout">3000</string>
+    <string name="text_stica_tv_comm_send_data_delay">Send data delay(ms)</string>
+    <string name="hint_stica_et_comm_send_data_delay">4</string>
+    <string name="text_stica_tv_comm_receive_wait_data">Receive data delay(ms)</string>
+    <string name="hint_stica_et_comm_receive_wait_data">100</string>
+    <string name="text_stica_tv_comm_nr_max_err">Max nr of communication error</string>
+    <string name="hint_stica_et_comm_nr_max_err">3</string>
+    <string name="text_tv_protocol">Protocol</string>
+    <string name="text_stica_tv_protocol_field_1">HEAD WORD(2 byte long)</string>
+    <string name="text_stica_tv_protocol_field_2">TAIL WORD(2 byte long)</string>
+
+    <!-- General string -->
+    <string name="text_bt_device_paired">Paired</string>
+    <string name="text_bt_device_unpaired">Unpaired</string>
+    <string name="text_bt_devices_discovering">Devices discovering</string>
+    <string name="text_bt_devices_discovering_completed">Devices discovering completed</string>
+
+    <!-- General string -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- EULA -->
+    <string name="eula">Eula:
+    By downloading "Easy Scada" application from Google™ (here after referered to as “The Company”), installing or using this application or any portion thereof (“Application”), you agree to the following terms and conditions (the “Terms and Conditions”).
+
+    1. USE OF APPLICATION
+        a. The Company grants you the non-exclusive, non-transferable, limited right and license to install and use this Application solely and exclusively for your personal use.
+        b. You may not use the Application in any manner that could damage, disable, overburden, or impair the Application (or servers or networks connected to the Application), nor may you use the Application in any manner that could interfere with any other party’s use and enjoyment of the Application (or servers or networks connected to the Application).
+        c. You agree that you are solely responsible for (and that The Company has no responsibility to you or to any third party for) your use of the Application, any breach of your obligations under the Terms and Conditions, and for the consequences (including any loss or damage which The Company may suffer) of any such breach.
+    2. PROPRIETARY RIGHTS
+        You acknowledge that (a) the Application contains proprietary and confidential information that is protected by applicable intellectual property and other laws, and (b) The Company and/or third parties own all right, title and interest in and to the Application and content, excluding content provided by you, that may be presented or accessed through the Application, including without limitation all Intellectual Property Rights therein and thereto. “Intellectual Property Rights” means any and all rights existing from time to time under patent law, copyright law, trade secret law, trademark law, unfair competition law, and any and all other proprietary rights, and any and all applications, renewals, extensions and restorations thereof, now or hereafter in force and effect worldwide. You agree that you will not, and will not allow any third party to, (i) copy, sell, license, distribute, transfer, modify, adapt, translate, prepare derivative works from, decompile, reverse engineer, disassemble or otherwise attempt to derive source code from the Application or content that may be presented or accessed through the Application for any purpose, unless otherwise permitted, (ii) take any action to circumvent or defeat the security or content usage rules provided, deployed or enforced by any functionality (including without limitation digital rights management functionality) contained in the Application, (iii) use the Application to access, copy, transfer, transcode or retransmit content in violation of any law or third party rights, or (iv) remove, obscure, or alter The Company’s or any third partyâ€™s copyright notices, trademarks, or other proprietary rights notices affixed to or contained within or accessed in conjunction with or through the Application.
+    3. THE COMPANY TERMS OF SERVICE AND PRIVACY POLICY
+        a. The Company’s Privacy Policy (located at http://www.google.com/privacypolicy.html) explains how The Company treats your information and protects your privacy when you use the Application. You agree to the use of your data in accordance with The Company’s privacy policies.
+        b. The Application may contain features that are used in conjunction with The Company’s search and other services. Accordingly, your use of such features of the Application is also governed by The Company’s Terms of Service located at http://www.google.com/terms_of_service.html, The Company’s Privacy Policy located at http://www.google.com/privacypolicy.html, as well as any applicable The Company Service-specific Terms of Service and Privacy Policy, which may be updated from time to time and without notice.
+    4. U.S. GOVERNMENT RESTRICTED RIGHTS
+        This Application, related materials and documentation have been developed entirely with private funds. If the user of the Application is an agency, department, employee, or other entity of the United States Government, the use, duplication, reproduction, release, modification, disclosure, or transfer of the Application, including technical data or manuals, is restricted by the terms, conditions and covenants contained in these Terms and Conditions. In accordance with Federal Acquisition Regulation 12.212 for civilian agencies and Defense Federal Acquisition Regulation Supplement 227.7202 for military agencies, use of the Application is further restricted by these Terms and Conditions.
+    5. EXPORT RESTRICTIONS
+        The Application may be subject to export controls or restrictions by the United States or other countries or territories. You agree to comply with all applicable U.S. and international export laws and regulations. These laws include restrictions on destinations, end users, and end use.
+    6. TERMINATION
+        These Terms and Conditions will continue to apply until terminated by either you or The Company as set forth below. You may terminate these Terms and Conditions at any time by permanently deleting the Application from your mobile device in its entirety. Your rights automatically and immediately terminate without notice from The Company or any Third Party if you fail to comply with any provision of these Terms and Conditions. In such event, you must immediately delete the Application.
+    7. INDEMNITY
+        To the maximum extent permitted by law, you agree to defend, indemnify and hold harmless The Company, its affiliates and their respective directors, officers, employees and agents from and against any and all claims, actions, suits or proceedings, as well as any and all losses, liabilities, damages, costs and expenses (including reasonable attorneys fees) arising out of or accruing from your use of the Application, including your downloading, installation, or use of the Application, or your violation of these Terms and Conditions.
+    8. DISCLAIMER OF WARRANTIES
+        a. YOU EXPRESSLY UNDERSTAND AND AGREE THAT YOUR USE OF THE APPLICATION IS AT YOUR SOLE DISCRETION AND RISK AND THAT THE APPLICATION IS PROVIDED AS IS AND AS AVAILABLE WITHOUT WARRANTY OF ANY KIND.
+        b. YOU ARE SOLELY RESPONSIBLE FOR ANY DAMAGE TO YOUR MOBILE DEVICE, OR OTHER DEVICE, OR LOSS OF DATA THAT RESULTS FROM SUCH USE.
+        c. THE COMPANY FURTHER EXPRESSLY DISCLAIMS ALL WARRANTIES AND CONDITIONS OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES AND CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT, WITH RESPECT TO THE APPLICATION.
+        d. THE APPLICATION IS NOT INTENDED FOR USE IN THE OPERATION OF NUCLEAR FACILITIES, LIFE SUPPORT SYSTEMS, EMERGENCY COMMUNICATIONS, AIRCRAFT NAVIGATION OR COMMUNICATION SYSTEMS, AIR TRAFFIC CONTROL SYSTEMS, OR ANY OTHER ACTIVITIES IN WHICH THE FAILURE OF THE APPLICATION COULD LEAD TO DEATH, PERSONAL INJURY, OR SEVERE PHYSICAL OR ENVIRONMENTAL DAMAGE.
+    9. LIMITATION OF LIABILITY
+        YOU EXPRESSLY UNDERSTAND AND AGREE THAT THE COMPANY, ITS SUBSIDIARIES AND AFFILIATES, AND ITS LICENSORS ARE NOT LIABLE TO YOU UNDER ANY THEORY OF LIABILITY FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL CONSEQUENTIAL OR EXEMPLARY DAMAGES THAT MAY BE INCURRED BY YOU THROUGH YOUR USE OF THE APPLICATION, INCLUDING ANY LOSS OF DATA OR DAMAGE TO YOUR MOBILE DEVICE, WHETHER OR NOT THE COMPANY OR ITS REPRESENTATIVES HAVE BEEN ADVISED OF OR SHOULD HAVE BEEN AWARE OF THE POSSIBILITY OF ANY SUCH LOSSES ARISING.
+
+    10. MISCELLANEOUS
+        a. These Terms and Conditions constitute the entire Agreement between you and The Company relating to the Application and govern your use of the Application, and completely replace any prior or contemporaneous agreements between you and The Company regarding the Application.
+        b. The failure of The Company to exercise or enforce any right or provision of these Terms and Conditions does not constitute a waiver of such right or provision, which will still be available to The Company.
+        c. If any court of law, having the jurisdiction to decide on this matter, rules that any provision of these Terms and Conditions is invalid, then that provision will be removed from the Terms and Conditions without affecting the rest of the Terms and Conditions. The remaining provisions of these Terms and Conditions will continue to be valid and enforceable.
+        d. The rights granted in these Terms and Conditions may not be assigned or transferred by either you or The Company without the prior written approval of the other party. Neither you nor The Company are permitted to delegate their responsibilities or obligations under these Terms and Conditions without the prior written approval of the other party.
+        e. These Terms and Conditions and your relationship with The Company under these Terms and Conditions will be governed by the laws of the State of California without regard to its conflict of laws provisions. You and The Company agree to submit to the exclusive jurisdiction of the courts located within the county of Santa Clara, California to resolve any legal matter arising from these Terms and Conditions. Notwithstanding this, you agree that The Company will still be allowed to apply for injunctive remedies (or an equivalent type of urgent legal relief) in any jurisdiction.
+    </string>
+
+    <string name="updates">The implementation of the Modbus Protocol was tested with this server: \n\nhttp://www.plcsimulator.org/ \n\nUpdates in this version: First Release </string>
+
 </resources>

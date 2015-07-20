@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/id_rl_1"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/id_tv_room_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/text_tv_room_name"/>
+
+            <Spinner
+                android:id="@+id/id_spn_room_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/id_tv_room_name" />
+
+            <TextView
+                android:id="@+id/id_tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/id_spn_room_name"
+                android:text="@string/text_tv_name"/>
+
+            <com.pretolesi.easyscada.CustomControls.StringEditText
+                android:id="@+id/id_et_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/id_tv_name"
+                android:hint="@string/hint_et_name" />
+
+            <TextView
+                android:id="@+id/id_tv_orientation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/id_et_name"
+                android:text="@string/text_tv_orientation"/>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/id_rg_pl"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_below="@id/id_tv_orientation"
+                        android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/id_rb_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_rb_horizontal" />
+
+                <RadioButton
+                    android:id="@+id/id_rb_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/text_rb_vertical" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/id_tv_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/id_rg_pl"
+                android:layout_marginTop="10dp"
+                android:text="@string/text_tv_position"/>
+
+            <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                  android:id="@+id/id_hsv_position_1"
+                                  android:layout_width="fill_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_below="@+id/id_tv_position"
+                                  android:layout_alignParentStart="true" >
+
+                <LinearLayout
+                    android:id="@+id/id_ll_position_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/id_tv_position_x"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_tv_position_x"
+                        android:labelFor="@+id/id_et_position_x" />
+
+                    <EditText
+                        android:id="@+id/id_et_position_x"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:inputType="number" />
+
+                    <TextView
+                        android:id="@+id/id_tv_position_y"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:text="@string/text_tv_position_y"
+                        android:labelFor="@+id/id_et_position_y" />
+
+                    <EditText
+                        android:id="@+id/id_et_position_y"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:inputType="number"/>
+
+                    <TextView
+                        android:id="@+id/id_tv_position_z"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:text="@string/text_tv_position_z"
+                        android:labelFor="@+id/id_et_position_z"/>
+
+                    <EditText
+                        android:id="@+id/id_et_position_z"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:inputType="number"/>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/id_tv_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/id_hsv_position_1"
+                android:layout_alignParentStart="true"
+                android:text="@string/text_tv_protocol" />
+
+            <CheckBox
+                android:id="@+id/id_cb_enable_tcp_ip_client_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/id_tv_protocol"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp"/>
+
+            <Spinner
+                android:id="@+id/id_spn_tcp_ip_client_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/id_cb_enable_tcp_ip_client_protocol"
+                android:layout_marginStart="40dp"
+                android:layout_below="@id/id_tv_protocol" />
+
+            <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                  android:id="@+id/id_hsv_protocol_fields"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_alignParentStart="true"
+                                  android:layout_below="@id/id_spn_tcp_ip_client_protocol"
+                                  android:layout_marginTop="20dp">
+
+                <RelativeLayout
+                    android:id="@+id/id_rl_protocol_fields"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/id_tv_protocol_ui"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_tv_protocol_ui"
+                        android:labelFor="@+id/id_et_protocol_ui"/>
+
+                    <com.pretolesi.easyscada.CustomControls.NumericEditText
+                        android:id="@+id/id_et_protocol_ui"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/id_tv_protocol_ui"
+                        android:text="0"
+                        android:inputType="number"/>
+
+                    <TextView
+                        android:id="@+id/id_tv_protocol_data_addr_"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/id_tv_protocol_ui"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/text_tv_protocol_data_addr"
+                        android:labelFor="@+id/id_et_protocol_data_addr"/>
+
+                    <com.pretolesi.easyscada.CustomControls.NumericEditText
+                        android:id="@+id/id_et_protocol_data_addr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/id_tv_protocol_data_addr_"
+                        android:layout_toEndOf="@+id/id_tv_protocol_ui"
+                        android:layout_marginStart="10dp"
+                        android:text="0"
+                        android:inputType="number"/>
+
+                </RelativeLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/id_tv_protocol_data_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/id_hsv_protocol_fields"
+                android:layout_alignParentStart="true"
+                android:text="@string/text_tv_data_type"/>
+
+            <Spinner
+                android:id="@+id/id_spn_protocol_data_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/id_tv_protocol_data_type" />
+
+
+</RelativeLayout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/id_rl_2"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/id_rl_1" >
+
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                              android:id="@+id/id_hsv_1"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_alignParentStart="true" >
+            <RelativeLayout
+                android:id="@+id/id_rl_1"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                 <TextView
+                    android:id="@+id/id_tv_nr_of_decimal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/text_tv_nr_of_decimal"
+                    android:labelFor="@+id/text_nvpa_tv_nr_of_decimal"/>
+
+                <com.pretolesi.easyscada.CustomControls.NumericEditText
+                    android:id="@+id/id_et_nr_of_decimal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/id_tv_nr_of_decimal"
+                    android:layout_alignParentStart="true"
+                    android:text="0"
+                    android:inputType="number"/>
+
+                 <TextView
+                    android:id="@+id/id_tv_min_nr_char_to_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/id_tv_nr_of_decimal"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/text_tv_min_nr_char_to_show"
+                    android:labelFor="@+id/text_nvpa_tv_min_nr_char_to_show"/>
+
+                <com.pretolesi.easyscada.CustomControls.NumericEditText
+                    android:id="@+id/id_et_min_nr_char_to_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/id_tv_min_nr_char_to_show"
+                    android:layout_toEndOf="@+id/id_tv_nr_of_decimal"
+                    android:layout_marginStart="10dp"
+                    android:text="0"
+                    android:inputType="number"/>
+
+                <TextView
+                    android:id="@+id/id_tv_um"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/id_tv_min_nr_char_to_show"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/text_tv_um"
+                    android:labelFor="@+id/text_nvpa_tv_um"/>
+
+                <com.pretolesi.easyscada.CustomControls.StringEditText
+                    android:id="@+id/id_et_um"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/id_tv_um"
+                    android:layout_toEndOf="@+id/id_tv_min_nr_char_to_show"
+                    android:layout_marginStart="10dp"
+                    android:text=""/>
+            </RelativeLayout>
+        </HorizontalScrollView>
+
+    </RelativeLayout>
