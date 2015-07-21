@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
@@ -26,6 +27,7 @@ import java.util.List;
 public class BluetoothClientConfiguration extends ListActivity {
 
     private static final int REQUEST_ENABLE_BT = 1;
+    private static final int REQUEST_PAIR_DEVICE = 2;
 
     //private android.widget.SimpleCursorAdapter m_Adapter;
     private BluetoothListAdapter m_blAdapter;
@@ -182,8 +184,13 @@ public class BluetoothClientConfiguration extends ListActivity {
             }
         } else {
             // If not paired, i try to pair
-            PairingThread pt = new PairingThread(m_blAdapter.getItem(position));
-            pt.run();
+//            Intent intent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+//            intent.putExtra(Settings.EXTRA_INPUT_METHOD_ID, m_blAdapter.getItem(position));
+//            startActivityForResult(intent, REQUEST_PAIR_DEVICE);
+            if(m_blAdapter != null){
+                PairingThread pt = new PairingThread(m_blAdapter.getItem(position));
+                pt.run();
+            }
         }
     }
 
@@ -227,30 +234,51 @@ public class BluetoothClientConfiguration extends ListActivity {
             // Get a BluetoothSocket to connect with the given BluetoothDevice
             try {
                 // MY_UUID is the app's UUID string, also used by the server code
-                bts = m_btDevice.createRfcommSocketToServiceRecord(BluetoothClient.SSP_UUID);
-            } catch (IOException e) { }
+                if(m_btDevice != null) {
+                    bts = m_btDevice.createRfcommSocketToServiceRecord(BluetoothClient.SSP_UUID);
+                }
+            } catch (IOException e) {
+
+            }
             m_btSocket = bts;
         }
 
         public void run() {
             // Cancel discovery because it will slow down the connection
-            if (m_BluetoothAdapter.isDiscovering()) {
+            if (m_BluetoothAdapter != null && m_BluetoothAdapter.isDiscovering()) {
                 m_BluetoothAdapter.cancelDiscovery();
             }
 
             try {
                 // Connect the device through the socket. This will block
                 // until it succeeds or throws an exception
-                m_btSocket.connect();
+                if(m_btSocket != null) {
+                    m_btSocket.connect();
+                    try {
+                        m_btSocket.close();
+                    } catch (IOException closeException) {
+                    }
+                }
+            } catch (IOException connectException) {
+                // Unable to connect; close the socket and try to use Device Bluetooth Setting
                 try {
-                    m_btSocket.close();
+                    if(m_btSocket != null) {
+                        m_btSocket.close();
+                    }
                 } catch (IOException closeException) { }
 
-            } catch (IOException connectException) {
-                // Unable to connect; close the socket and get out
-                try {
-                    m_btSocket.close();
-                } catch (IOException closeException) { }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Intent intent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+ //                        intent.putExtra(Settings.EXTRA_INPUT_METHOD_ID, m_blAdapter.getItem(position));
+                            startActivityForResult(intent, REQUEST_PAIR_DEVICE);
+                        } catch (Exception ex) {
+                            Toast.makeText(getApplicationContext(),"Error launching Bluetooth Setting", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
         }
     }
