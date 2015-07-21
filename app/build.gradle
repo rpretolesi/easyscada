@@ -8,8 +8,8 @@ android {
         applicationId "com.pretolesi.easyscada"
         minSdkVersion 17
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 12
+        versionName "1.2"
     }
     buildTypes {
         release {
