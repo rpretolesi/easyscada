@@ -66,6 +66,12 @@ public class BluetoothClient extends BaseCommClient implements ReadDataInputStre
             publishProgress(new ClientStatus(getID(), getName(), ClientStatus.Status.ERROR, "Device does not support Bluetooth"));
             return false;
         }
+        if (!m_BluetoothAdapter.isEnabled()) {
+            // Bluetooth is Disable
+            publishProgress(new ClientStatus(getID(), getName(), ClientStatus.Status.ERROR, "Device must turn on Bluetooth"));
+            return false;
+        }
+
         // Stop discovering
         if (m_BluetoothAdapter.isDiscovering()) {
             m_BluetoothAdapter.cancelDiscovery();
