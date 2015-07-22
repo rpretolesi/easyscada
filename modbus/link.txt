@@ -1,0 +1,3 @@
+http://www.electronhacks.com/2014/04/arduino-modbus-plc-rtu/
+http://forum.arduino.cc/index.php?topic=176142.0
+http://playground.arduino.cc/Code/ModbusMaster
