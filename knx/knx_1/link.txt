@@ -1,0 +1,6 @@
+https://github.com/franckmarini
+http://liwan.fr/KnxWithArduino/?page_id=75
+http://www.tapko.de/kimaip.html
+https://bitbucket.org/dka/arduino-tpuart
+https://bitbucket.org/dka/arduino-tpuart/src/ce1ce29b211d/Eagle-Files/
+http://dka.web-republic.de/2013/03/eibknx-telegram-structure-quick-reference/
