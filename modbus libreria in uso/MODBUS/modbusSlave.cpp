@@ -2,9 +2,19 @@
 #include <modbus.h>
 #include <modbusDevice.h>
 #include <Arduino.h>
+/* Pretolesi */
+//#include "C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SoftwareSerial\SoftwareSerial.h"
 
 modbusSlave::modbusSlave()
 {
+		Serial.println("modbusSlave");
+_softwareSerial = 0;
+}
+/* Pretolesi */
+modbusSlave::modbusSlave(uint8_t receivePin, uint8_t transmitPin, bool inverse_logic /* = false */)
+{
+	Serial.println("modbusSlave");
+	_softwareSerial = new SoftwareSerial(receivePin, transmitPin, inverse_logic);
 }
 /*
 Set the Serial Baud rate.
@@ -13,27 +23,17 @@ and flush the serial port.
 */
 void modbusSlave::setBaud(word baud)
 {
-	_baud = baud;
-	//calculate the time perdiod for 3 characters for the given bps in ms.
-	_frameDelay = 24000/_baud;
+	if(_softwareSerial == 0){
+		_baud = baud;
+		//calculate the time perdiod for 3 characters for the given bps in ms.
+		_frameDelay = 24000/_baud;
 
-	Serial.begin(baud);
+		Serial.begin(baud);
 
-	// defaults to 8-bit, no parity, 1 stop bit
-	//clear parity, stop bits, word length
-//	UCSR0C = UCSR0C & B11000001;
-//	UCSR0B = UCSR0B & B11111011; 
-
-	//Set word length to 8 bits
-//	UCSR0C = UCSR0C | B00000110;
-
-	//No parity
-//	UCSR0C = UCSR0C | B00000000;
-
-	//1 Stop bit
-//	UCSR0C = UCSR0C | B00000100;
-
-	Serial.flush();
+		Serial.flush();
+	} else {
+		_softwareSerial->begin(baud);
+	}
 }
 
 /*
@@ -74,14 +74,27 @@ void modbusSlave::calcCrc(void)
 void modbusSlave::checkSerial(void)
 {
 	//while there is more data in the UART than when last checked
-	while(Serial.available() > _len)
-	{
-		//update the incoming query message length
-		_len = Serial.available();
-		//Wait for 3 bytewidths of data (SOM/EOM)
-//		delayMicroseconds(RTUFRAMETIME);
-		delay(_frameDelay);
-		//Check the UART again
+	if(_softwareSerial == 0){
+		while(Serial.available() > _len)
+		{
+			//update the incoming query message length
+			_len = Serial.available();
+			//Wait for 3 bytewidths of data (SOM/EOM)
+	//		delayMicroseconds(RTUFRAMETIME);
+			delay(_frameDelay);
+			//Check the UART again
+		}
+	} else {
+		while(_softwareSerial->available() > _len)
+		{
+			//update the incoming query message length
+			_len = _softwareSerial->available();
+			//Wait for 3 bytewidths of data (SOM/EOM)
+	//		delayMicroseconds(RTUFRAMETIME);
+			delayMicroseconds(500);
+//			delay(1);
+			//Check the UART again
+		}
 	}
 }
 
@@ -96,8 +109,13 @@ void modbusSlave::serialRx(void)
 	_msg = (byte*) malloc(_len);
 
 		//copy the query byte for byte to the new buffer
-		for (i=0 ; i < _len ; i++)
-			_msg[i] = Serial.read();
+		for (i=0 ; i < _len ; i++){
+			if(_softwareSerial == 0){
+				_msg[i] = Serial.read();
+			} else {
+				_msg[i] = _softwareSerial->read();
+			}
+		}
 }
 
 /*
@@ -331,8 +349,13 @@ void modbusSlave::run(void)
 		int i;
 		//send the reply to the serial UART
 		//Senguino doesn't support a bulk serial write command....
-		for(i = 0 ; i < _len ; i++)
-			Serial.write(_msg[i]);
+		for(i = 0 ; i < _len ; i++){
+			if(_softwareSerial == 0){
+				Serial.write(_msg[i]);
+			} else {
+				_softwareSerial->write(_msg[i]);
+			}
+		}
 		//free the allocated memory for the reply message
 		free(_msg);
 		//reset the message length
