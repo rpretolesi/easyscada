@@ -1,6 +1,6 @@
 Verificare Se disattivo il Bluetooth durante comunicazione dia il giusto messaggio.
 Verificare perche' non appare lo stato del server se apro e chiudo mettendo l'app in back ground
-
+VerificARE SE NELLE LIBRERIE MODBUS POSSO togliere l'include lungo e mettere la funzione di baudrate.
 
 Da fare nelle prossime versioni
 
