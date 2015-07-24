@@ -1,5 +1,7 @@
 #include <stdint.h>
 #include <Arduino.h>
+#include <stdint.h>
+#include <Arduino.h>
 
 #ifndef MODBUSUTILS
 #define MODBUSUTILS
@@ -15,4 +17,5 @@ class modbusUtils
         long getLongFromBytes(byte*);
         void setFloatToBytes(float, byte*);
         float getFloatFromBytes(byte*);
-}
+};
+#endif

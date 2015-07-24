@@ -1,4 +1,4 @@
-
+#include <Arduino.h>
 #include <modbusUtils.h>
 
 modbusUtils::modbusUtils()

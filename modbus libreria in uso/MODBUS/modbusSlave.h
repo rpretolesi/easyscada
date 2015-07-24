@@ -58,7 +58,6 @@ class modbusSlave
 		modbusSlave(uint8_t receivePin, uint8_t transmitPin, bool inverse_logic = false);
 		void setBaud(word);
 		void setBaudAndInterCharTiming(word, word);
-		void setBaud(word);
 		word getBaud(void);
 		void calcCrc(void);
 		void checkSerial(void);
