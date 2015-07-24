@@ -2,18 +2,14 @@
 #include <modbus.h>
 #include <modbusDevice.h>
 #include <Arduino.h>
-/* Pretolesi */
-//#include "C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SoftwareSerial\SoftwareSerial.h"
 
 modbusSlave::modbusSlave()
 {
-		Serial.println("modbusSlave");
-_softwareSerial = 0;
+	_softwareSerial = 0;
 }
 /* Pretolesi */
 modbusSlave::modbusSlave(uint8_t receivePin, uint8_t transmitPin, bool inverse_logic /* = false */)
 {
-	Serial.println("modbusSlave");
 	_softwareSerial = new SoftwareSerial(receivePin, transmitPin, inverse_logic);
 }
 /*
@@ -23,13 +19,26 @@ and flush the serial port.
 */
 void modbusSlave::setBaud(word baud)
 {
+	_baud = baud;
+	//calculate the time perdiod for 3 characters for the given bps in ms.
+	_frameDelay = 24000000/_baud;
+
 	if(_softwareSerial == 0){
-		_baud = baud;
-		//calculate the time perdiod for 3 characters for the given bps in ms.
-		_frameDelay = 24000/_baud;
-
 		Serial.begin(baud);
+		Serial.flush();
+	} else {
+		_softwareSerial->begin(baud);
+	}
+}
 
+void modbusSlave::setBaudAndInterCharTiming(word baud, word frameDelay)
+{
+	_baud = baud;
+	//calculate the time perdiod for 3 characters for the given bps in ms.
+	_frameDelay = frameDelay;
+
+	if(_softwareSerial == 0){
+		Serial.begin(baud);
 		Serial.flush();
 	} else {
 		_softwareSerial->begin(baud);
@@ -79,21 +88,16 @@ void modbusSlave::checkSerial(void)
 		{
 			//update the incoming query message length
 			_len = Serial.available();
-			//Wait for 3 bytewidths of data (SOM/EOM)
-	//		delayMicroseconds(RTUFRAMETIME);
-			delay(_frameDelay);
-			//Check the UART again
+
+			delayMicroseconds(_frameDelay);
 		}
 	} else {
 		while(_softwareSerial->available() > _len)
 		{
 			//update the incoming query message length
 			_len = _softwareSerial->available();
-			//Wait for 3 bytewidths of data (SOM/EOM)
-	//		delayMicroseconds(RTUFRAMETIME);
-			delayMicroseconds(500);
-//			delay(1);
-			//Check the UART again
+
+			delayMicroseconds(_frameDelay);
 		}
 	}
 }
