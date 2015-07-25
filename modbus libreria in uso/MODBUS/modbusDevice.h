@@ -6,7 +6,6 @@
 
 #include <modbusRegBank.h>
 #include <modbus.h>
-//#include <Wprogram.h>
 
 class modbusDevice:public modbusRegBank
 {

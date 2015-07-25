@@ -65,6 +65,7 @@ class modbusSlave
 		void getDigitalStatus(byte, word, word);
 		void getAnalogStatus(byte, word, word);
 		void setStatus(byte, word, word);
+		void setAnalogStatus(byte, word, word *, short);
 		void run(void);
 
 		modbusDevice *_device;

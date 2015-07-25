@@ -19,6 +19,7 @@
 
 #define WRITE_DO	0x05
 #define WRITE_AO	0x06
+#define WRITE_MULTI_AO	0x10
 
 #define RTU 		0x01
 #define ASCII		0x02

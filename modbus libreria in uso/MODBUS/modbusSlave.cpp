@@ -213,8 +213,16 @@ void modbusSlave::getAnalogStatus(byte funcType, word startreg, word numregs)
 		val = _device->get(startreg+i);
 		//write the high byte of the register value
 		_msg[3 + i * 2]  = val >> 8;
+        Serial.print(3 + i * 2);
+        Serial.print(" - ");
+        Serial.print(_msg[3 + i * 2]);
+        Serial.print(" - ");
 		//write the low byte of the register value
 		_msg[4 + i * 2] = val & 0xFF;
+        Serial.print(4 + i * 2);
+        Serial.print(" - ");
+        Serial.print(_msg[4 + i * 2]);
+        Serial.println(" - ");
 		//increment the register
 		i++;
 	}
@@ -268,14 +276,51 @@ void modbusSlave::setStatus(byte funcType, word reg, word val)
 	_msg[_len - 1]= _crc & 0xFF;
 }
 
+void modbusSlave::setAnalogStatus(byte funcType, word reg, word *fieldDataRegisters, short fieldQuantityOfRegisters)
+{
+	//Set the query response message length
+	//Device ID byte, Function byte, Register byte, Value byte, CRC word
+	_len = 8;
+	//allocate memory for the message buffer.
+	_msg = (byte *) malloc(_len);
+
+
+	//write the device ID
+	_msg[0] = _device->getId();
+
+	// add 40001 to the register and set it's value to val
+	for(short shIndex = 0; shIndex < fieldQuantityOfRegisters; shIndex++){
+		_device->set(reg + 40001 + shIndex, fieldDataRegisters[fieldQuantityOfRegisters - 1 - shIndex]);
+	}
+
+	//write the function type of the response message
+	_msg[1] = funcType;
+
+	//write the register start number high byte value
+	_msg[2] = reg >> 8;
+	//write the register start number low byte value
+	_msg[3] = reg & 0xFF;
+	//write the Quantity Of Registers value's high byte
+	_msg[4] = fieldQuantityOfRegisters >> 8;
+	//write the Quantity Of Registers value's low byte
+	_msg[5] = fieldQuantityOfRegisters & 0xFF;
+
+	//calculate the crc for the query reply and append it.
+	this->calcCrc();
+	_msg[_len - 2]= _crc >> 8;
+	_msg[_len - 1]= _crc & 0xFF;
+}
+
 void modbusSlave::run(void)
 {
-
 	byte deviceId;
 	byte funcType;
 	word field1;
 	word field2;
-	
+
+	word *fieldDataRegisters;
+	word fieldQuantityOfRegisters;
+
 	int i;
 	
 	//initialize mesasge length
@@ -306,41 +351,97 @@ void modbusSlave::run(void)
 	//if the checksum does not match, ignore the message
 	if ( _crc != ((_msg[_len - 2] << 8) + _msg[_len - 1]))
 		return;
-	
+
 	//copy the function type from the incoming query
 	funcType = _msg[1];
 
 	//copy field 1 from the incoming query
 	field1	= (_msg[2] << 8) | _msg[3];
 
-	//copy field 2 from the incoming query
-	field2  = (_msg[4] << 8) | _msg[5];
-	
-	//free the allocated memory for the query message
-	free(_msg);
-	//reset the message length;
-	_len = 0;
-
 	//generate query response based on function type
 	switch(funcType)
 	{
 	case READ_DI:
+		//copy field 2 from the incoming query
+		field2  = (_msg[4] << 8) | _msg[5];
+
+		//free the allocated memory for the query message
+		free(_msg);
+		//reset the message length;
+		_len = 0;
+
 		this->getDigitalStatus(funcType, field1, field2);
 		break;
 	case READ_DO:
+		//copy field 2 from the incoming query
+		field2  = (_msg[4] << 8) | _msg[5];
+
+		//free the allocated memory for the query message
+		free(_msg);
+		//reset the message length;
+		_len = 0;
+
 		this->getDigitalStatus(funcType, field1, field2);
 		break;
 	case READ_AI:
+		//copy field 2 from the incoming query
+		field2  = (_msg[4] << 8) | _msg[5];
+
+		//free the allocated memory for the query message
+		free(_msg);
+		//reset the message length;
+		_len = 0;
+
 		this->getAnalogStatus(funcType, field1, field2);
 		break;
 	case READ_AO:
+		//copy field 2 from the incoming query
+		field2  = (_msg[4] << 8) | _msg[5];
+
+		//free the allocated memory for the query message
+		free(_msg);
+		//reset the message length;
+		_len = 0;
+
 		this->getAnalogStatus(funcType, field1, field2);
 		break;
 	case WRITE_DO:
+		//copy field 2 from the incoming query
+		field2  = (_msg[4] << 8) | _msg[5];
+
+		//free the allocated memory for the query message
+		free(_msg);
+		//reset the message length;
+		_len = 0;
+
 		this->setStatus(funcType, field1, field2);
 		break;
 	case WRITE_AO:
+		//copy field 2 from the incoming query
+		field2  = (_msg[4] << 8) | _msg[5];
+
+		//free the allocated memory for the query message
+		free(_msg);
+		//reset the message length;
+		_len = 0;
+
 		this->setStatus(funcType, field1, field2);
+		break;
+	case WRITE_MULTI_AO:
+		// allocate memory for data to write
+		fieldQuantityOfRegisters = (_msg[4] << 8) | _msg[5];
+		fieldDataRegisters = (word*) malloc(fieldQuantityOfRegisters);
+		girare i 4 byte qui
+		for(short shIndex = 0; shIndex < fieldQuantityOfRegisters; shIndex++){
+			*fieldDataRegisters = (_msg[7 + (2 * shIndex)] << 8) | _msg[8 + (2 * shIndex)];
+		}
+
+		//free the allocated memory for the query message
+		free(_msg);
+		//reset the message length;
+		_len = 0;
+
+		this->setAnalogStatus(funcType, field1, fieldDataRegisters, fieldQuantityOfRegisters);
 		break;
 	default:
 		return;

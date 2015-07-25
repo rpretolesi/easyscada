@@ -72,7 +72,7 @@ only have one device assigned to it.
   slave._device = &regBank;  
 
 // Initialize the serial port for coms at 9600 baud  
-  slave.setBaudAndInterCharTiming(9600, 500);    
+  slave.setBaudAndInterCharTiming(9600, 1500);    
 }
 
 void loop()
@@ -82,8 +82,19 @@ void loop()
 //    regBank.set(10001, (byte) random(0, 2));
 //    regBank.set(30001, (word) random(0, 32767));
 //    regBank.set(40001, (word) random(0, 32767));
-     short sh = -123;
+//      short sh1 = regBank.get(40001);
+//      short sh2 = regBank.get(40002);
+//      long l = regBank.getLong(40001);
+//      Serial.print("sh1: ");
+//      Serial.print(sh1);
+//      Serial.print("-sh2: ");
+//      Serial.print(sh2);
+//      Serial.print("-long: ");
+ //     Serial.println(l);
 
-     regBank.set(
+//     long l = -1234567890;
+//     short sh = -3276;
+
+//     regBank.setLong(40001, l);
      slave.run();  
 }

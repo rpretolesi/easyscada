@@ -6,8 +6,6 @@
 #define _MODBUSREGBANK
 
 #include <modbus.h>
-//#include <Wprogram.h>
-
 
 struct modbusDigReg
 {
@@ -33,8 +31,12 @@ class modbusRegBank
 		
 		void add(word);
 		word get(word);
+		short getShort(word addr);
+		long getLong(word addr);
 		void set(word, word);
-				
+		void setShort(word, short);
+		void setLong(word, long);
+
 	private:
 		void * search(word);
 		
