@@ -104,10 +104,6 @@ short modbusRegBank::getShort(word addr)
 
 long modbusRegBank::getLong(word addr)
 {
-	union {
-		word temp_word[2];
-		byte temp_byte[4];
-	} u;
 
 	if(addr < 20000)
 	{
@@ -119,19 +115,15 @@ long modbusRegBank::getLong(word addr)
 		modbusAnaReg * regNextPtr;
 		regPtr = (modbusAnaReg *) this->search(addr);
 		if(regPtr){
-			u.temp_word[0] = regPtr->value;
-			regNextPtr = regPtr->next;
+			word temp_word_0 = regPtr->value;
 			if(regNextPtr){
-				u.temp_word[1] = regNextPtr->value;
+				word temp_word_1 = regNextPtr->value;
 			}
 			long lTemp;
-			lTemp = u.temp_byte[3];
-			lTemp = lTemp | (u.temp_byte[2] << 8);
-			lTemp = lTemp | (u.temp_byte[1] << 8);
-			lTemp = lTemp | (u.temp_byte[0] << 8);
+			lTemp = temp_word_0;
+			lTemp = lTemp << 16 | temp_word_1;
 
 			return lTemp;
-//			return (long)(u.temp_byte[3] << 24) | (u.temp_byte[2] << 16) | (u.temp_byte[1] << 8) | u.temp_byte[0];
 		} else {
 			return(NULL);
 		}

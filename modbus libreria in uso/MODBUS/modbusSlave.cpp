@@ -211,18 +211,14 @@ void modbusSlave::getAnalogStatus(byte funcType, word startreg, word numregs)
 	{
 		//retrieve the value from the register bank for the current register
 		val = _device->get(startreg+i);
+        Serial.print("val: ");
+        Serial.print(val);
+        Serial.print(" startreg+i: ");
+        Serial.println(startreg+i);
 		//write the high byte of the register value
 		_msg[3 + i * 2]  = val >> 8;
-        Serial.print(3 + i * 2);
-        Serial.print(" - ");
-        Serial.print(_msg[3 + i * 2]);
-        Serial.print(" - ");
 		//write the low byte of the register value
 		_msg[4 + i * 2] = val & 0xFF;
-        Serial.print(4 + i * 2);
-        Serial.print(" - ");
-        Serial.print(_msg[4 + i * 2]);
-        Serial.println(" - ");
 		//increment the register
 		i++;
 	}
@@ -288,9 +284,16 @@ void modbusSlave::setAnalogStatus(byte funcType, word reg, word *fieldDataRegist
 	//write the device ID
 	_msg[0] = _device->getId();
 
+	Serial.print("fieldQuantityOfRegisters: ");
+	Serial.println(fieldQuantityOfRegisters);
+
 	// add 40001 to the register and set it's value to val
 	for(short shIndex = 0; shIndex < fieldQuantityOfRegisters; shIndex++){
-		_device->set(reg + 40001 + shIndex, fieldDataRegisters[fieldQuantityOfRegisters - 1 - shIndex]);
+		_device->set(reg + 40001 + shIndex, fieldDataRegisters[shIndex]);
+		 Serial.print("reg: ");
+		 Serial.print(reg + 40001 + shIndex);
+		 Serial.print("fieldDataRegisters: ");
+		 Serial.println(fieldDataRegisters[shIndex]);
 	}
 
 	//write the function type of the response message
@@ -431,9 +434,8 @@ void modbusSlave::run(void)
 		// allocate memory for data to write
 		fieldQuantityOfRegisters = (_msg[4] << 8) | _msg[5];
 		fieldDataRegisters = (word*) malloc(fieldQuantityOfRegisters);
-		girare i 4 byte qui
 		for(short shIndex = 0; shIndex < fieldQuantityOfRegisters; shIndex++){
-			*fieldDataRegisters = (_msg[7 + (2 * shIndex)] << 8) | _msg[8 + (2 * shIndex)];
+			fieldDataRegisters[shIndex] = (_msg[7 + (2 * shIndex)] << 8) | _msg[8 + (2 * shIndex)];
 		}
 
 		//free the allocated memory for the query message
@@ -442,6 +444,9 @@ void modbusSlave::run(void)
 		_len = 0;
 
 		this->setAnalogStatus(funcType, field1, fieldDataRegisters, fieldQuantityOfRegisters);
+
+		// free memory for data to write
+		free(fieldDataRegisters);
 		break;
 	default:
 		return;

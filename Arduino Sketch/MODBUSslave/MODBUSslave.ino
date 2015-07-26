@@ -3,6 +3,7 @@
 #include <modbusRegBank.h>
 #include <modbusSlave.h>
 #include <SoftwareSerial.h>
+#include <LiquidCrystal.h>
 
 /*
 This example code shows a quick and dirty way to get an
@@ -16,12 +17,16 @@ modbusDevice regBank;
 //Create the modbus slave protocol handler
 modbusSlave slave(7,6);
 
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);  
+
 void setup()
 {   
   Serial.begin(9600);
 
   //Assign the modbus device ID.  
   regBank.setId(1);
+
+  lcd.begin(16, 2);
 
 /*
 modbus registers follow the following format
@@ -63,6 +68,9 @@ required by the master to retrieve the data
   regBank.add(40003);  
   regBank.add(40004);  
   regBank.add(40005);  
+  regBank.add(40006);  
+  regBank.add(40007);  
+  regBank.add(40008);  
 /*
 Assign the modbus device object to the protocol handler
 This is where the protocol handler will look to read and write
@@ -85,7 +93,7 @@ void loop()
 //      short sh1 = regBank.get(40001);
 //      short sh2 = regBank.get(40002);
 //      long l = regBank.getLong(40001);
-//      Serial.print("sh1: ");
+//      Serial.println(l);
 //      Serial.print(sh1);
 //      Serial.print("-sh2: ");
 //      Serial.print(sh2);
@@ -96,5 +104,14 @@ void loop()
 //     short sh = -3276;
 
 //     regBank.setLong(40001, l);
-     slave.run();  
+  lcd.setCursor(0, 0);  
+  lcd.print(regBank.getLong(40001)); 
+  lcd.setCursor(8, 0);  
+  lcd.print(regBank.getShort(40003)); 
+  lcd.setCursor(0, 1);  
+  lcd.print(regBank.getLong(40005)); 
+  lcd.setCursor(8, 1);  
+  lcd.print(regBank.getLong(40007)); 
+     
+  slave.run();  
 }
