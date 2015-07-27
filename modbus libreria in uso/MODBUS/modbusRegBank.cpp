@@ -113,11 +113,14 @@ long modbusRegBank::getLong(word addr)
 	{
 		modbusAnaReg * regPtr;
 		modbusAnaReg * regNextPtr;
+		word temp_word_0 = 0;
+		word temp_word_1 = 0;
 		regPtr = (modbusAnaReg *) this->search(addr);
+		finire qui usando ilserach per indirizzi successivi todo
 		if(regPtr){
-			word temp_word_0 = regPtr->value;
+			temp_word_0 = regPtr->value;
 			if(regNextPtr){
-				word temp_word_1 = regNextPtr->value;
+				temp_word_1 = regNextPtr->value;
 			}
 			long lTemp;
 			lTemp = temp_word_0;
@@ -130,8 +133,9 @@ long modbusRegBank::getLong(word addr)
 	}
 }
 
-void modbusRegBank::set(word addr, word value)
+word modbusRegBank::set(word addr, word value)
 {
+	word wError = 0;
 	//for digital data
 	if(addr < 20000)
 	{
@@ -139,11 +143,15 @@ void modbusRegBank::set(word addr, word value)
 		//search for the register address
 		regPtr = (modbusDigReg *) this->search(addr);
 		//if a pointer was returned the set the register value to true if value is non zero
-		if(regPtr)
-			if(value)
+		if(regPtr){
+			if(value){
 				regPtr->value = 0xFF;
-			else
+			} else {
 				regPtr->value = 0x00;
+			}
+		} else {
+			wError = ILLEGAL_DATA_ADDRESS;
+		}
 	}
 	else
 	{
@@ -151,9 +159,14 @@ void modbusRegBank::set(word addr, word value)
 		//search for the register address
 		regPtr = (modbusAnaReg *) this->search(addr);
 		//if found then assign the register value to the new value.
-		if(regPtr)
+		if(regPtr){
 			regPtr->value = value;
+		} else {
+			wError = ILLEGAL_DATA_ADDRESS;
+		}
 	}
+
+	return wError;
 }
 
 void modbusRegBank::setShort(word addr, short shValue)

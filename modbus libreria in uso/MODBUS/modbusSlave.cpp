@@ -270,32 +270,51 @@ void modbusSlave::setStatus(byte funcType, word reg, word val)
 
 void modbusSlave::setAnalogStatus(byte funcType, word reg, word *fieldDataRegisters, short fieldQuantityOfRegisters)
 {
-	//Set the query response message length
-	//Device ID byte, Function byte, Register byte, Value byte, CRC word
-	_len = 8;
-	//allocate memory for the message buffer.
-	_msg = (byte *) malloc(_len);
-
-
-	//write the device ID
-	_msg[0] = _device->getId();
+	word wError;
 
 	// add 40001 to the register and set it's value to val
 	for(short shIndex = 0; shIndex < fieldQuantityOfRegisters; shIndex++){
-		_device->set(reg + 40001 + shIndex, fieldDataRegisters[shIndex]);
+		wError = _device->set(reg + 40001 + shIndex, fieldDataRegisters[shIndex]);
+		// Error setting Data
+		if(wError){
+			break;
+		}
 	}
 
-	//write the function type of the response message
-	_msg[1] = funcType;
+	//Set the query response message length
+	if(wError){
+		// Prepare the error answer
+		//Device ID byte, Exception code, Error Code byte, CRC word
+		_len = 5;
+		//allocate memory for the message buffer.
+		_msg = (byte *) malloc(_len);
 
-	//write the register start number high byte value
-	_msg[2] = reg >> 8;
-	//write the register start number low byte value
-	_msg[3] = reg & 0xFF;
-	//write the Quantity Of Registers value's high byte
-	_msg[4] = fieldQuantityOfRegisters >> 8;
-	//write the Quantity Of Registers value's low byte
-	_msg[5] = fieldQuantityOfRegisters & 0xFF;
+		//write the device ID
+		_msg[0] = _device->getId();
+		//write the Exception code of the response message
+		_msg[1] = funcType + 0x80 ;
+		//write the Error code of the response message
+		_msg[2] = wError;
+
+	} else {
+		//Device ID byte, Function byte, Register byte, Value byte, CRC word
+		_len = 8;
+		//allocate memory for the message buffer.
+		_msg = (byte *) malloc(_len);
+
+		//write the device ID
+		_msg[0] = _device->getId();
+		//write the function type of the response message
+		_msg[1] = funcType;
+		//write the register start number high byte value
+		_msg[2] = reg >> 8;
+		//write the register start number low byte value
+		_msg[3] = reg & 0xFF;
+		//write the Quantity Of Registers value's high byte
+		_msg[4] = fieldQuantityOfRegisters >> 8;
+		//write the Quantity Of Registers value's low byte
+		_msg[5] = fieldQuantityOfRegisters & 0xFF;
+	}
 
 	//calculate the crc for the query reply and append it.
 	this->calcCrc();

@@ -56,7 +56,7 @@ public class NumericEditText extends EditText {
 
     private void Init(DataType dtDataType, String strHint) {
         setGravity(Gravity.CENTER);
-        setTextColor(Color.RED);
+        setTextColor(Color.YELLOW);
         setSingleLine();
         setHint(strHint);
         setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -279,10 +279,16 @@ public class NumericEditText extends EditText {
             } else {
                 m_rllp.topMargin = t + (w/2);
             }
-//            m_rllp.rightMargin = r;
-//            m_rllp.bottomMargin = b;
-//            m_rllp.height = h;
-//            m_rllp.width = w;
+        }
+    }
+    public void setPositionDown(int l, int t, int r, int b, int h, int w, boolean bVertical){
+        if(m_rllp != null) {
+            m_rllp.leftMargin = l - ((getWidth() - w)/2);
+            if(!bVertical){
+                m_rllp.topMargin = t + (h/2) + 60;
+            } else {
+                m_rllp.topMargin = t + (w/2) + 60;
+            }
         }
     }
 }

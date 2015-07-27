@@ -80,7 +80,7 @@ only have one device assigned to it.
   slave._device = &regBank;  
 
 // Initialize the serial port for coms at 9600 baud  
-  slave.setBaudAndInterCharTiming(9600, 1500);    
+  slave.setBaudAndInterCharTiming(9600, 500);    
 }
 
 void loop()
@@ -104,6 +104,7 @@ void loop()
 //     short sh = -3276;
 
 //     regBank.setLong(40001, l);
+//  lcd.clear();
   lcd.setCursor(0, 0);  
   lcd.print(regBank.getLong(40001)); 
   lcd.setCursor(8, 0);  

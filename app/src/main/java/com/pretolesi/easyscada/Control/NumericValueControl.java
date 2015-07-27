@@ -154,18 +154,21 @@ public class NumericValueControl extends Control implements
                                 strValue = String.format("%d %s", sh, m_bvd.getValueUM());
                                 strValue = centerString(strValue, m_bvd.getValueMinNrCharToShow());
                                 this.setError(null);
+                                this.setTextAlarm(null);
                             }
                             if(ticrs.getValue() instanceof Integer){
                                 Integer i = (Integer)ticrs.getValue();
                                 strValue = String.format("%d %s", i, m_bvd.getValueUM());
                                 strValue = centerString(strValue, m_bvd.getValueMinNrCharToShow());
                                 this.setError(null);
+                                this.setTextAlarm(null);
                             }
                             if(ticrs.getValue() instanceof Long){
                                 Long l = (Long)ticrs.getValue();
                                 strValue = String.format("%d %s", l, m_bvd.getValueUM());
                                 strValue = centerString(strValue, m_bvd.getValueMinNrCharToShow());
                                 this.setError(null);
+                                this.setTextAlarm(null);
                             }
 
                             if(ticrs.getValue() instanceof Float){
@@ -177,6 +180,7 @@ public class NumericValueControl extends Control implements
                                 }
                                 strValue = centerString(strValue, m_bvd.getValueMinNrCharToShow());
                                 this.setError(null);
+                                this.setTextAlarm(null);
                             }
 
                             if(ticrs.getValue() instanceof Double){
@@ -188,12 +192,15 @@ public class NumericValueControl extends Control implements
                                 }
                                 strValue = centerString(strValue, m_bvd.getValueMinNrCharToShow());
                                 this.setError(null);
+                                this.setTextAlarm(null);
                             }
                         } else {
                             this.setError(ticrs.getErrorMessage());
+                            this.setTextAlarm(ticrs.getErrorMessage());
                         }
                     } else {
                         this.setError(ticrs.getErrorMessage());
+                        this.setTextAlarm(ticrs.getErrorMessage());
                     }
                     setText(strValue);
                 }

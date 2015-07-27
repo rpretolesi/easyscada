@@ -3,6 +3,7 @@ package com.pretolesi.easyscada.Control;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MotionEventCompat;
@@ -55,12 +56,16 @@ public class LightSwitchControl extends Switch implements
     private Handler m_TimerHandler;
     private long m_lRepeatingTime;
 
-    // Label for Switch
+    // Label for Show The Name
     private LabelTextView m_LabelTextView;
+
+    // Label for Show The Alarm
+    private LabelTextView m_AlarmTextView;
 
     public LightSwitchControl(Context context) {
         super(context);
         m_LabelTextView = null;
+        m_AlarmTextView = null;
         this.m_cd = null;
         this.m_iMsgID = -1;
         this.m_iTIDReadClicked = false;
@@ -79,6 +84,7 @@ public class LightSwitchControl extends Switch implements
     public LightSwitchControl(Context context, ControlData cd, int iMsgID, boolean bEditMode) {
         super(context);
         m_LabelTextView = null;
+        m_AlarmTextView = null;
         if(cd != null) {
             this.m_cd = cd;
             this.m_iMsgID = iMsgID;
@@ -120,6 +126,12 @@ public class LightSwitchControl extends Switch implements
 
     public boolean getVertical() { return m_bVertical; }
 
+    public void setTextAlarm(String strTextAlarm){
+        if(m_AlarmTextView != null) {
+            m_AlarmTextView.setText(strTextAlarm);
+        }
+    }
+
     /*
      * End
      * Timer variable and function
@@ -130,8 +142,10 @@ public class LightSwitchControl extends Switch implements
         // Label Text View
         ViewParent view = this.getParent();
         if(view != null && view instanceof RelativeLayout) {
-            m_LabelTextView = new LabelTextView(getContext());
+            m_LabelTextView = new LabelTextView(getContext(), Color.GREEN);
             ((RelativeLayout) view).addView(m_LabelTextView);
+            m_AlarmTextView = new LabelTextView(getContext(),Color.RED);
+            ((RelativeLayout) view).addView(m_AlarmTextView);
         }
 
         // Listener
@@ -169,6 +183,7 @@ public class LightSwitchControl extends Switch implements
 
         // Delete
         m_LabelTextView = null;
+        m_AlarmTextView = null;
     }
 
 //    private synchronized void readValue(){
@@ -191,10 +206,13 @@ public class LightSwitchControl extends Switch implements
         RelativeLayout.LayoutParams rllp = (RelativeLayout.LayoutParams)this.getLayoutParams();
         if(rllp != null) {
             if(m_LabelTextView != null) {
-                m_LabelTextView.setPosition(rllp.leftMargin, rllp.topMargin, rllp.rightMargin, rllp.bottomMargin, canvas.getHeight(), canvas.getWidth(), getVertical());
+                m_LabelTextView.setPositionUp(rllp.leftMargin, rllp.topMargin, rllp.rightMargin, rllp.bottomMargin, canvas.getHeight(), canvas.getWidth(), getVertical());
                 if(getTag() != null && getTag() instanceof String){
                     m_LabelTextView.setText((String) getTag());
                 }
+            }
+            if(m_AlarmTextView != null) {
+                m_AlarmTextView.setPositionDown(rllp.leftMargin, rllp.topMargin, rllp.rightMargin, rllp.bottomMargin, canvas.getHeight(), canvas.getWidth(), getVertical());
             }
         }
     }
@@ -239,30 +257,37 @@ public class LightSwitchControl extends Switch implements
                                         setChecked(false);
                                     }
                                     this.setError(null);
+                                    this.setTextAlarm(null);
                                 }
                                 if(ticrs.getValue() instanceof Integer){
                                     Integer i = (Integer)ticrs.getValue();
                                     this.setError(null);
+                                    this.setTextAlarm(null);
                                 }
                                 if(ticrs.getValue() instanceof Long){
                                     Long l = (Long)ticrs.getValue();
                                     this.setError(null);
+                                    this.setTextAlarm(null);
                                 }
 
                                 if(ticrs.getValue() instanceof Float){
                                     Float f = (Float)ticrs.getValue();
                                     this.setError(null);
+                                    this.setTextAlarm(null);
                                 }
 
                                 if(ticrs.getValue() instanceof Double){
                                     Double dbl = (Double)ticrs.getValue();
                                     this.setError(null);
+                                    this.setTextAlarm(null);
                                 }
                             } else {
                                 this.setError(ticrs.getErrorMessage());
+                                this.setTextAlarm(ticrs.getErrorMessage());
                             }
                         } else {
                             this.setError(ticrs.getErrorMessage());
+                            this.setTextAlarm(ticrs.getErrorMessage());
                         }
                     }
                     m_iTIDReadClicked = false;
@@ -279,8 +304,10 @@ public class LightSwitchControl extends Switch implements
                 if(ticws.getServerID() == m_cd.getTranspProtocolID()) {
                     if(ticws.getStatus() == ClientWriteStatus.Status.OK){
                         this.setError(null);
+                        this.setTextAlarm(null);
                     } else {
                         this.setError(ticws.getErrorMessage());
+                        this.setTextAlarm(ticws.getErrorMessage());
                     }
                 }
             }

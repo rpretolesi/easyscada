@@ -32,4 +32,8 @@
 #define AI			0x03
 #define AO			0x04
 
+#define ILLEGAL_FUNCTION		0x01
+#define ILLEGAL_DATA_ADDRESS	0x02
+#define ILLEGAL_DATA_VALUE		0x03
+
 #endif

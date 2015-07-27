@@ -1,11 +1,11 @@
 Verificare Se disattivo il Bluetooth durante comunicazione dia il giusto messaggio.
 Verificare perche' non appare lo stato del server se apro e chiudo mettendo l'app in back ground
 VerificARE SE NELLE LIBRERIE MODBUS POSSO togliere l'include lungo e mettere la funzione di baudrate.
+Mettere il messaggio di errore come textview aggiuntivo sotto al campo in errore, finire i Sensor Control.
 
 Da fare nelle prossime versioni
 
 Verificare che incarichi di lettura o scrittura di Msg gia' esistenti, non rallentino l'elaborazione ed in generale facciamo troppo decadere le prestazione del sistema
-Mettere il messaggio di errore come textview aggiuntivo sotto al campo in errore.
 Quando nel sensor uso la simulazione, vedere se si puo' migliorare la visualizzazioneBMM00191
 Mettere la stessa List messa nei messaggi bluetooth, nelle altre liste.
 Inserire anche lo stato del segnale nel bluetooth.

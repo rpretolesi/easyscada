@@ -42,12 +42,16 @@ public class Control extends TextView implements
     private NumericEditText m_edEditText;
     private boolean m_bVertical;
 
-    // Label for Switch
+    // Label for Show The Name
     private LabelTextView m_LabelTextView;
+
+    // Label for Show The Alarm
+    private LabelTextView m_AlarmTextView;
 
     public Control(Context context) {
         super(context);
         m_LabelTextView = null;
+        m_AlarmTextView = null;
         m_bEditMode = false;
         m_dtDataType = DataType.SHORT;
         m_bVertical = false;
@@ -63,8 +67,10 @@ public class Control extends TextView implements
         // Label Text View
         ViewParent view = this.getParent();
         if(view != null && view instanceof RelativeLayout) {
-            m_LabelTextView = new LabelTextView(getContext());
+            m_LabelTextView = new LabelTextView(getContext(), Color.GREEN);
             ((RelativeLayout) view).addView(m_LabelTextView);
+            m_AlarmTextView = new LabelTextView(getContext(),Color.RED);
+            ((RelativeLayout) view).addView(m_AlarmTextView);
         }
     }
 
@@ -72,6 +78,7 @@ public class Control extends TextView implements
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         m_LabelTextView = null;
+        m_AlarmTextView = null;
     }
 
     @Override
@@ -85,16 +92,20 @@ public class Control extends TextView implements
         RelativeLayout.LayoutParams rllp = (RelativeLayout.LayoutParams)this.getLayoutParams();
         if(rllp != null) {
             if(m_LabelTextView != null) {
-                m_LabelTextView.setPosition(rllp.leftMargin, rllp.topMargin, rllp.rightMargin, rllp.bottomMargin, canvas.getHeight(), canvas.getWidth(), getVertical());
+                m_LabelTextView.setPositionUp(rllp.leftMargin, rllp.topMargin, rllp.rightMargin, rllp.bottomMargin, canvas.getHeight(), canvas.getWidth(), getVertical());
                 if(getTag() != null && getTag() instanceof String){
                     m_LabelTextView.setText((String) getTag());
                 }
             }
+            if(m_AlarmTextView != null) {
+                m_AlarmTextView.setPositionDown(rllp.leftMargin, rllp.topMargin, rllp.rightMargin, rllp.bottomMargin, canvas.getHeight(), canvas.getWidth(), getVertical());
+            }
             if (m_edEditText != null) {
-                m_edEditText.setPosition(rllp.leftMargin, rllp.topMargin, rllp.rightMargin, rllp.bottomMargin, canvas.getHeight(), canvas.getWidth(), getVertical());
-//                if(getTag() != null && getTag() instanceof String){
-//                    m_edEditText.setText("");
-//                }
+                if(m_AlarmTextView != null && m_AlarmTextView.getText() != null && m_AlarmTextView.getText().length() > 0){
+                    m_edEditText.setPositionDown(rllp.leftMargin, rllp.topMargin, rllp.rightMargin, rllp.bottomMargin, canvas.getHeight(), canvas.getWidth(), getVertical());
+                } else {
+                    m_edEditText.setPosition(rllp.leftMargin, rllp.topMargin, rllp.rightMargin, rllp.bottomMargin, canvas.getHeight(), canvas.getWidth(), getVertical());
+                }
             }
         }
     }
@@ -118,6 +129,12 @@ public class Control extends TextView implements
     }
 
     public boolean getVertical() { return m_bVertical; }
+
+    public void setTextAlarm(String strTextAlarm){
+        if(m_AlarmTextView != null) {
+            m_AlarmTextView.setText(strTextAlarm);
+        }
+    }
 
     /*
      * Begin
