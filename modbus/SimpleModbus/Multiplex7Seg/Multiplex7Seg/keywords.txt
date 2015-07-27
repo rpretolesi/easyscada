@@ -1,2 +1,0 @@
-set	KEYWORD2
-loadValue	KEYWORD2

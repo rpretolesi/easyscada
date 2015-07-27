@@ -79,6 +79,9 @@ class modbusSlave
 			 _crc,
 			 _frameDelay;
 
+		/* 	Pretolesi:
+		*	This enable the using of any pin for the communication
+		*/
 		SoftwareSerial *_softwareSerial;
 
 
