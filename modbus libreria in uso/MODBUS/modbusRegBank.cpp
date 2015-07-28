@@ -102,34 +102,51 @@ short modbusRegBank::getShort(word addr)
 	}
 }
 
-long modbusRegBank::getLong(word addr)
+bool modbusRegBank::getLong(word addr, long *lValue)
 {
 
 	if(addr < 20000)
 	{
-		return(NULL);
+		return false;
 	}
 	else
 	{
 		modbusAnaReg * regPtr;
-		modbusAnaReg * regNextPtr;
 		word temp_word_0 = 0;
 		word temp_word_1 = 0;
 		regPtr = (modbusAnaReg *) this->search(addr);
-		finire qui usando ilserach per indirizzi successivi todo
-		if(regPtr){
-			temp_word_0 = regPtr->value;
-			if(regNextPtr){
-				temp_word_1 = regNextPtr->value;
-			}
-			long lTemp;
-			lTemp = temp_word_0;
-			lTemp = lTemp << 16 | temp_word_1;
-
-			return lTemp;
-		} else {
-			return(NULL);
+		if(!regPtr){
+			return false;
 		}
+		temp_word_0 = regPtr->value;
+        Serial.print("addr: ");
+		Serial.print(addr);
+        Serial.print(" - temp_word_0: ");
+		Serial.println(temp_word_0);
+
+		regPtr = (modbusAnaReg *) this->search(addr + 1);
+		if(!regPtr){
+			return false;
+		}
+		temp_word_1 = regPtr->value;
+        Serial.print("addr + 1: ");
+		Serial.print(addr + 1);
+        Serial.print(" - temp_word_1: ");
+		Serial.println(temp_word_1);
+
+		if(!lValue){
+			return false;
+		}
+
+		*lValue = temp_word_0;
+        Serial.print("lValue_0: ");
+		Serial.println(*lValue);
+
+		*lValue = *lValue << 16 | temp_word_1;
+        Serial.print("lValue_1: ");
+		Serial.println(*lValue);
+
+		return true;
 	}
 }
 

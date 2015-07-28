@@ -32,7 +32,7 @@ class modbusRegBank
 		void add(word);
 		word get(word);
 		short getShort(word addr);
-		long getLong(word addr);
+		bool getLong(word addr, long *);
 		word set(word, word);
 		void setShort(word, short);
 		void setLong(word, long);
