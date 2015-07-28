@@ -162,7 +162,9 @@ void modbusSlave::getDigitalStatus(byte funcType, word startreg, word numregs)
 	{
 		//if a value is found for the current register, set bit number bitn of msg[3]
 		//else clear it
-		if(_device->get(startreg))
+		word wValue;
+		_device->get(startreg, &wValue);
+		if(wValue)
 			bitSet(_msg[3], bitn);
 		else
 			bitClear(_msg[3], bitn);
@@ -180,6 +182,7 @@ void modbusSlave::getDigitalStatus(byte funcType, word startreg, word numregs)
 
 void modbusSlave::getAnalogStatus(byte funcType, word startreg, word numregs)
 {
+	word wError;
 	word val;
 	word i = 0;
 
@@ -199,24 +202,41 @@ void modbusSlave::getAnalogStatus(byte funcType, word startreg, word numregs)
 	//allocate memory for the query response
 	_msg = (byte *) malloc(_len);
 
-	//write the device ID
-	_msg[0] = _device->getId();
-	//write the function type
-	_msg[1] = funcType;
-	//set the data byte count
-	_msg[2] = _len - 5;
-
 	//for each register queried
 	while(numregs--)
 	{
 		//retrieve the value from the register bank for the current register
-		val = _device->get(startreg+i);
+		wError = _device->get(startreg + i, &val);
+		if(wError){
+			break;
+		}
 		//write the high byte of the register value
 		_msg[3 + i * 2]  = val >> 8;
 		//write the low byte of the register value
 		_msg[4 + i * 2] = val & 0xFF;
 		//increment the register
 		i++;
+	}
+
+	if(wError){
+		// Prepare the error answer
+		//Device ID byte, Exception code, Error Code byte, CRC word
+		_len = 5;
+
+		//write the device ID
+		_msg[0] = _device->getId();
+		//write the Exception code of the response message
+		_msg[1] = funcType + 0x80 ;
+		//write the Error code of the response message
+		_msg[2] = wError;
+	} else {
+		//write the device ID
+		_msg[0] = _device->getId();
+
+		//write the function type
+    	_msg[1] = funcType;
+    	//set the data byte count
+    	_msg[2] = _len - 5;
 	}
 
 	//generate the crc for the query reply and append it

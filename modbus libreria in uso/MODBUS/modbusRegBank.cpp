@@ -56,29 +56,35 @@ void modbusRegBank::add(word addr)
 	}
 }
 
-word modbusRegBank::get(word addr)
+word modbusRegBank::get(word addr, word *wValue)
 {
 	if(addr < 20000)
 	{
 		modbusDigReg * regPtr;
 		regPtr = (modbusDigReg *) this->search(addr);
-		if(regPtr)
-			return(regPtr->value);
-		else
-			return(NULL);	
+		if(!regPtr){
+			return ILLEGAL_DATA_ADDRESS;
+		}
+
+		*wValue = (regPtr->value);
+
+		return OK;
 	}
 	else
 	{
 		modbusAnaReg * regPtr;
 		regPtr = (modbusAnaReg *) this->search(addr);
-		if(regPtr)
-			return(regPtr->value);
-		else
-			return(NULL);	
+		if(!regPtr){
+			return ILLEGAL_DATA_ADDRESS;
+		}
+
+		*wValue = (regPtr->value);
+
+		return OK;
 	}
 }
 
-short modbusRegBank::getShort(word addr)
+word modbusRegBank::getShort(word addr, short *shValue)
 {
 	union {
 		word temp_word;
@@ -87,27 +93,33 @@ short modbusRegBank::getShort(word addr)
 
 	if(addr < 20000)
 	{
-		return(NULL);
+		return ILLEGAL_DATA_ADDRESS;
 	}
 	else
 	{
 		modbusAnaReg * regPtr;
 		regPtr = (modbusAnaReg *) this->search(addr);
-		if(regPtr){
-			u.temp_word = regPtr->value;
-			return (short)(u.temp_byte[1] << 8) | u.temp_byte[0];
-		} else {
-			return(NULL);
+
+		if(!regPtr){
+			return ILLEGAL_DATA_ADDRESS;
 		}
+
+		if(!shValue){
+			return ILLEGAL_DATA_ADDRESS;
+		}
+
+		u.temp_word = regPtr->value;
+		*shValue = (short)(u.temp_byte[1] << 8) | u.temp_byte[0];
+
+		return OK;
 	}
 }
 
-bool modbusRegBank::getLong(word addr, long *lValue)
+word modbusRegBank::getLong(word addr, long *lValue)
 {
-
 	if(addr < 20000)
 	{
-		return false;
+		return ILLEGAL_DATA_ADDRESS;
 	}
 	else
 	{
@@ -116,43 +128,28 @@ bool modbusRegBank::getLong(word addr, long *lValue)
 		word temp_word_1 = 0;
 		regPtr = (modbusAnaReg *) this->search(addr);
 		if(!regPtr){
-			return false;
+			return ILLEGAL_DATA_ADDRESS;
 		}
 		temp_word_0 = regPtr->value;
-        Serial.print("addr: ");
-		Serial.print(addr);
-        Serial.print(" - temp_word_0: ");
-		Serial.println(temp_word_0);
 
 		regPtr = (modbusAnaReg *) this->search(addr + 1);
 		if(!regPtr){
-			return false;
+			return ILLEGAL_DATA_ADDRESS;
 		}
 		temp_word_1 = regPtr->value;
-        Serial.print("addr + 1: ");
-		Serial.print(addr + 1);
-        Serial.print(" - temp_word_1: ");
-		Serial.println(temp_word_1);
 
 		if(!lValue){
-			return false;
+			return ILLEGAL_DATA_ADDRESS;
 		}
 
 		*lValue = temp_word_0;
-        Serial.print("lValue_0: ");
-		Serial.println(*lValue);
-
 		*lValue = *lValue << 16 | temp_word_1;
-        Serial.print("lValue_1: ");
-		Serial.println(*lValue);
-
-		return true;
+		return OK;
 	}
 }
 
 word modbusRegBank::set(word addr, word value)
 {
-	word wError = 0;
 	//for digital data
 	if(addr < 20000)
 	{
@@ -167,7 +164,7 @@ word modbusRegBank::set(word addr, word value)
 				regPtr->value = 0x00;
 			}
 		} else {
-			wError = ILLEGAL_DATA_ADDRESS;
+			return ILLEGAL_DATA_ADDRESS;
 		}
 	}
 	else
@@ -179,14 +176,14 @@ word modbusRegBank::set(word addr, word value)
 		if(regPtr){
 			regPtr->value = value;
 		} else {
-			wError = ILLEGAL_DATA_ADDRESS;
+			return ILLEGAL_DATA_ADDRESS;
 		}
 	}
 
-	return wError;
+	return OK;
 }
 
-void modbusRegBank::setShort(word addr, short shValue)
+word modbusRegBank::setShort(word addr, short shValue)
 {
 	union {
 		short temp_short;
@@ -197,19 +194,23 @@ void modbusRegBank::setShort(word addr, short shValue)
 
 	//for digital data
 	if(addr < 20000){
+		return ILLEGAL_DATA_ADDRESS;
 	}
 	else {
 		modbusAnaReg * regPtr;
 		//search for the register address
 		regPtr = (modbusAnaReg *) this->search(addr);
 		//if found then assign the register value to the new value.
-		if(regPtr){
-			regPtr->value = (u.temp_byte[1] << 8) | u.temp_byte[0];
+		if(!regPtr){
+			return ILLEGAL_DATA_ADDRESS;
 		}
+		regPtr->value = (u.temp_byte[1] << 8) | u.temp_byte[0];
 	}
+
+	return OK;
 }
 
-void modbusRegBank::setLong(word addr, long lValue)
+word modbusRegBank::setLong(word addr, long lValue)
 {
 	union {
 		long temp_long;
@@ -220,21 +221,25 @@ void modbusRegBank::setLong(word addr, long lValue)
 
 	//for digital data
 	if(addr < 20000){
+		return ILLEGAL_DATA_ADDRESS;
 	}
 	else {
 		modbusAnaReg * regPtr;
-		modbusAnaReg * regNextPtr;
 		//search for the register address
 		regPtr = (modbusAnaReg *) this->search(addr);
-		//if found then assign the register value to the new value.
-		if(regPtr){
-			regPtr->value = (u.temp_byte[3] << 8) | u.temp_byte[2];
-			regNextPtr = regPtr->next;
-			if(regNextPtr){
-				regNextPtr->value = (u.temp_byte[1] << 8) | u.temp_byte[0];
-			}
+		if(!regPtr){
+			return ILLEGAL_DATA_ADDRESS;
 		}
+		regPtr->value = (u.temp_byte[3] << 8) | u.temp_byte[2];
+
+		regPtr = (modbusAnaReg *) this->search(addr + 1);
+		if(!regPtr){
+			return ILLEGAL_DATA_ADDRESS;
+		}
+		regPtr->value = (u.temp_byte[1] << 8) | u.temp_byte[0];
 	}
+
+	return OK;
 }
 
 void * modbusRegBank::search(word addr)

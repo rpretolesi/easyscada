@@ -145,6 +145,7 @@ public class SensorValueBaseControl extends Control implements
                             closeInputField();
                         } else {
                             setError(null);
+                            this.setTextAlarm(null);
                         }
                     } else {
                         if(m_bvd.getSensorEnableSimulation()){
@@ -153,6 +154,7 @@ public class SensorValueBaseControl extends Control implements
                         } else {
                             requestFocus();
                             setError(ticws.getErrorMessage());
+                            this.setTextAlarm(ticws.getErrorMessage());
                         }
                     }
                 }

@@ -30,12 +30,12 @@ class modbusRegBank
 		modbusRegBank(void);
 		
 		void add(word);
-		word get(word);
-		short getShort(word addr);
-		bool getLong(word addr, long *);
+		word get(word addr, word *wValue);
+		word getShort(word addr, short *shValue);
+		word getLong(word addr, long *);
 		word set(word, word);
-		void setShort(word, short);
-		void setLong(word, long);
+		word setShort(word, short);
+		word setLong(word, long);
 
 	private:
 		void * search(word);
