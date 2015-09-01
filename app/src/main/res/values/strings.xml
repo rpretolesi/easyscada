@@ -256,7 +256,7 @@
 
     <!-- EULA -->
     <string name="eula">Eula:
-    By downloading "Easy Scada" application from Google™ (here after referered to as “The Company”), installing or using this application or any portion thereof (“Application”), you agree to the following terms and conditions (the “Terms and Conditions”).
+    By downloading "Easy Scada And Home Automation" application from Google™ (here after referered to as “The Company”), installing or using this application or any portion thereof (“Application”), you agree to the following terms and conditions (the “Terms and Conditions”).
 
     1. USE OF APPLICATION
         a. The Company grants you the non-exclusive, non-transferable, limited right and license to install and use this Application solely and exclusively for your personal use.
@@ -291,6 +291,6 @@
         e. These Terms and Conditions and your relationship with The Company under these Terms and Conditions will be governed by the laws of the State of California without regard to its conflict of laws provisions. You and The Company agree to submit to the exclusive jurisdiction of the courts located within the county of Santa Clara, California to resolve any legal matter arising from these Terms and Conditions. Notwithstanding this, you agree that The Company will still be allowed to apply for injunctive remedies (or an equivalent type of urgent legal relief) in any jurisdiction.
     </string>
 
-    <string name="updates">The implementation of the Modbus Protocol was tested with this server: \n\nhttp://www.plcsimulator.org/ \n\nUpdates in this version: First Release </string>
+    <string name="updates">The implementation of the Modbus Protocol was tested with this server: \n\nhttp://www.plcsimulator.org/ \n\nUpdates in this version: Some improvements regarding the Bluetooth discovery. </string>
 
 </resources>

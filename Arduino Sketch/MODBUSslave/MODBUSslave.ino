@@ -4,6 +4,7 @@
 #include <modbusSlave.h>
 #include <SoftwareSerial.h>
 #include <LiquidCrystal.h>
+#include <Servo.h> 
 
 /*
 This example code shows a quick and dirty way to get an
@@ -19,6 +20,8 @@ modbusSlave slave(7,6);
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);  
 
+Servo myservo;  // create servo object to control a servo 
+
 void setup()
 {   
   pinMode(10, INPUT);
@@ -28,7 +31,8 @@ void setup()
   regBank.setId(1);
 
   lcd.begin(16, 2);
-
+  
+//  myservo.attach(8);
 /*
 modbus registers follow the following format
 00001-09999  Digital Outputs, A master device can read and write to these registers
@@ -95,6 +99,7 @@ void loop()
   if(regBank.getLong(40001, &l1) == 0){
     if(l1_old != l1){
       l1_old = l1;
+      
 //      lcd.clear();
       lcd.setCursor(0, 0);  
       lcd.print("       "); 
@@ -102,6 +107,7 @@ void loop()
       lcd.print(l1); 
     }
   }
+  
   if(regBank.getLong(40003, &l2) == 0){
     if(l2_old != l2){
       l2_old = l2;
@@ -135,4 +141,6 @@ void loop()
   } 
 
   slave.run();  
+//  myservo.write(l1);   
+//  delay(15); 
 }
